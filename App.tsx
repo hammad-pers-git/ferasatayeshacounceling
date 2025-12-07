@@ -6,7 +6,6 @@ import Services from './components/Services';
 import SpecializedAreas from './components/SpecializedAreas';
 import Products from './components/Products';
 import FAQ from './components/FAQ';
-import Resources from './components/Resources';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingActions from './components/FloatingActions';
@@ -26,7 +25,6 @@ const App: React.FC = () => {
         <SpecializedAreas />
         <Products />
         <FAQ />
-        <Resources />
         <Contact />
       </main>
       <Footer />

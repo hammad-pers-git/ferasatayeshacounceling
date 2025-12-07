@@ -37,7 +37,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                     className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary-black)]/90 via-transparent to-transparent md:bg-gradient-to-t md:from-[var(--primary-black)]/80 md:to-transparent flex flex-col justify-end p-5 md:p-10">
-                    <h3 className="text-white text-2xl md:text-3xl font-serif font-bold mb-0.5 md:mb-1">Manisha Varma</h3>
+                    <h3 className="text-white text-2xl md:text-3xl font-serif font-bold mb-0.5 md:mb-1">Ayesha Akmal</h3>
                     <p className="text-[var(--primary-color)] text-xs md:text-sm font-bold uppercase tracking-wider">Senior Psychologist</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-8 py-2 md:py-4">
-                        <div className="bg-[var(--primary-color-tint-98)] p-4 md:p-5 rounded-xl border border-[var(--primary-color-tint-90)] hover:shadow-md transition-shadow flex md:block items-center gap-4 md:gap-0">
+                        <div className="bg-[var(--primary-color-tint-98)] p-4 md:p-5 rounded-xl border border-[var(--primary-color-tint-90)] flex md:block items-center gap-4 md:gap-0">
                             <div className="shrink-0">
                                 <Award className="text-[var(--primary-color-80)] mb-0 md:mb-3" size={24} />
                             </div>
@@ -69,7 +69,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                                 <p className="text-xs md:text-sm mt-0.5 md:mt-1 text-[var(--grey)]">Licensed Clinical Psychologist with global certifications.</p>
                             </div>
                         </div>
-                        <div className="bg-[var(--secondary-color-one-96)] p-4 md:p-5 rounded-xl border border-[var(--secondary-color-one-70)]/30 hover:shadow-md transition-shadow flex md:block items-center gap-4 md:gap-0">
+                        <div className="bg-[var(--secondary-color-one-96)] p-4 md:p-5 rounded-xl border border-[var(--secondary-color-one-70)]/30 flex md:block items-center gap-4 md:gap-0">
                             <div className="shrink-0">
                                 <BookOpen className="text-[var(--success-color)] mb-0 md:mb-3" size={24} />
                             </div>
