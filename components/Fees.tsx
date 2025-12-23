@@ -15,11 +15,10 @@ const PricingCard = ({
   isPopular,
 }: any) => (
   <div
-    className={`relative flex flex-col p-7 rounded-[2rem] border bg-white h-full transition-all ${
-      isPopular
+    className={`relative flex flex-col p-7 rounded-[2rem] border bg-white h-full transition-all ${isPopular
         ? 'border-[#FCD34D] shadow-xl'
         : 'border-gray-200 shadow-md'
-    }`}
+      }`}
   >
     <div className="flex justify-between items-start mb-6">
       <div className="p-3 bg-gray-100 rounded-xl">{icon}</div>
@@ -48,15 +47,19 @@ const PricingCard = ({
     </ul>
 
     <button
-      className={`mt-6 w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
-        isPopular
+      onClick={() => {
+        const el = document.getElementById('contact');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }}
+      className={`mt-6 w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${isPopular
           ? 'bg-[#FCD34D] text-gray-900 hover:bg-black hover:text-white'
           : 'bg-gray-900 text-white hover:bg-black'
-      }`}
+        }`}
     >
-      Choose Plan
+      Get Started
       <ChevronRight size={16} />
     </button>
+
   </div>
 );
 
@@ -126,13 +129,12 @@ const Fees = () => {
               <SwiperSlide key={idx} className="flex justify-center">
                 {({ isActive }) => (
                   <div
-                    className={`transition-all duration-300 ${
-                      window.innerWidth < 1024
+                    className={`transition-all duration-300 ${window.innerWidth < 1024
                         ? isActive
                           ? 'scale-100 opacity-100'
                           : 'scale-95 opacity-50'
                         : ''
-                    }`}
+                      }`}
                   >
                     <PricingCard {...plan} />
                   </div>

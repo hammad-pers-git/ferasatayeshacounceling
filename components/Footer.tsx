@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           <h6 className="text-white font-semibold mb-2">Quick Links</h6>
           <a href="#home" className="hover:text-yellow-400 transition-colors">Home</a>
           <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
-          <a href="#products" className="hover:text-yellow-400 transition-colors">Services</a>
+          <a href="#fees" className="hover:text-yellow-400 transition-colors">Pricing</a>
           <a href="#contact" className="hover:text-yellow-400 transition-colors">Contact</a>
         </div>
 

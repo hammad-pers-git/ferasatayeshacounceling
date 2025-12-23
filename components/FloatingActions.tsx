@@ -38,9 +38,8 @@ const FloatingActions: React.FC = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 ease-in-out ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-      }`}
+      className={`fixed bottom-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+        }`}
     >
       {/* White Rectangle Container only on mobile */}
       <div className="lg:hidden w-full bg-white shadow-lg flex justify-center items-center gap-4 p-4 md:p-6 pointer-events-auto relative rounded-t-xl">
@@ -102,17 +101,6 @@ const FloatingActions: React.FC = () => {
         </a>
       </div>
 
-      {/* Scroll To Top - Desktop Only */}
-      <button
-        onClick={scrollToTop}
-        className="hidden sm:flex absolute right-4 bottom-4 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center
-                   bg-gradient-to-r from-[#b33b92] via-[#9C1D78] to-[#7f1460]
-                   shadow-md hover:shadow-lg hover:from-[#c156a3] hover:to-[#831864]
-                   text-white transition-all duration-300 transform hover:-translate-y-1 hover:scale-110"
-        aria-label="Scroll to top"
-      >
-        <ChevronUp size={24} />
-      </button>
     </div>
   );
 };

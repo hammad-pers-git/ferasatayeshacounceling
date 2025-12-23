@@ -166,13 +166,15 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
             </button>
 
             {/* Contact Info at Bottom */}
-            <div className="mt-auto border-t border-gray-600 pt-4">
+            <div className="mt-auto border-t border-gray-600 pt-4 mb-20">
               <h4 className="text-white text-lg mb-2 font-bold">Contact</h4>
               <p className="text-white text-sm mb-1">Email: contact@ayeshaakmal.com</p>
               <p className="text-white text-sm">Phone: +92 341 2120752</p>
             </div>
           </div>
         </div>
+        
+
 
         {/* Overlay */}
         {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />}
