@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Sprout, User, Phone, PhoneCall } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
-const Navbar: React.FC = () => {
+type NavbarProps = {
+  onHomeClick: () => void;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -13,16 +17,14 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Products', href: '#products' },
+    { name: 'Pricing', href: '#fees' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
   ];
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsOpen(false);
-      }
+      if (window.innerWidth >= 768) setIsOpen(false);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -33,6 +35,11 @@ const Navbar: React.FC = () => {
     const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setIsOpen(false);
+  };
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    onHomeClick(); // Notify App to set view 'main'
   };
 
   const toggleModal = () => {
@@ -49,10 +56,8 @@ const Navbar: React.FC = () => {
     const SERVICE_ID = 'service_oqejhpc';
     const USER_ID = 'wbT681sW_zuuQx93B';
 
-    // Send Contact email
     emailjs.sendForm(SERVICE_ID, 'template_9pbg3ri', formRef.current, USER_ID)
       .then(() => {
-        // Send Auto-Reply
         emailjs.sendForm(SERVICE_ID, 'template_mfwdmk7', formRef.current, USER_ID)
           .catch(() => setSuccessMessage('Message sent, but auto-reply failed.'));
 
@@ -87,7 +92,7 @@ const Navbar: React.FC = () => {
 
             {/* Logo + Branding */}
             <div className="flex justify-center md:justify-start items-center w-full md:w-auto mx-auto md:mx-0 gap-4">
-              <a href="#home" onClick={(e) => handleScroll(e, '#home')} className="group block relative py-2 shrink-0">
+              <a href="#home" onClick={handleLogoClick} className="group block relative py-2 shrink-0">
                 <div className="w-20 h-20 md:w-24 md:h-24 bg-[#F9F7F2] rounded-full border border-[#1E4620] flex flex-col items-center justify-center relative shadow-sm group-hover:shadow-md transition-all duration-300">
                   <div className="absolute inset-1 rounded-full border border-[#1E4620] opacity-20"></div>
                   <div className="flex flex-col items-center text-[#1E4620] leading-none z-10 pt-1">
@@ -98,7 +103,7 @@ const Navbar: React.FC = () => {
                   </div>
                 </div>
               </a>
-              <a href="#home" onClick={(e) => handleScroll(e, '#home')} className="hidden md:flex items-center group text-left">
+              <a href="#home" onClick={handleLogoClick} className="hidden md:flex items-center group text-left">
                 <span className="text-[#1E4620] font-serif font-bold text-xl tracking-wide group-hover:opacity-80 transition-opacity">
                   Ayeshaakmalcounseling
                 </span>
@@ -124,9 +129,15 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Drawer */}
-        <div className={`fixed top-0 left-0 h-full w-3/4 max-w-xs bg-black text-white shadow-xl transform transition-transform duration-300 z-50 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed inset-x-0 bottom-0 h-3/4 max-h-[80%] bg-gray-800 text-white shadow-xl transform transition-transform duration-500 z-50 
+  ${isOpen ? 'translate-y-0' : 'translate-y-full'} rounded-t-2xl`}>
           <div className="flex flex-col h-full px-6 py-8 relative">
-            <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-gray-400 hover:text-white"><X size={24} /></button>
+            {/* Close Button */}
+            <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">
+              <X size={24} />
+            </button>
+
+            {/* Logo inside Drawer */}
             <div className="flex items-center justify-center mb-6 mt-2">
               <div className="w-20 h-20 bg-[#F9F7F2] rounded-full border border-[#1E4620] flex flex-col items-center justify-center relative">
                 <div className="absolute inset-1 rounded-full border border-[#1E4620] opacity-20"></div>
@@ -137,23 +148,25 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="border-t border-white mb-6"></div>
+
+            <div className="border-t border-gray-600 mb-6"></div>
+
+            {/* Nav Links */}
             <div className="flex flex-col space-y-4 mb-6">
               {navLinks.map((link) => (
-                <a key={link.name} href={link.href} onClick={(e) => handleScroll(e, link.href)} className="hover:text-[#FCD34D] text-lg font-normal transition-colors">
+                <a key={link.name} href={link.href} onClick={(e) => handleScroll(e, link.href)} className="hover:text-yellow-400 text-lg font-normal transition-colors">
                   {link.name}
                 </a>
               ))}
             </div>
-            <button onClick={toggleModal} className="bg-white border-2 border-[#FCD34D] text-black px-4 py-2 rounded-lg hover:bg-yellow-50 transition-colors font-normal mb-6">
+
+            {/* Get Started Button */}
+            <button onClick={toggleModal} className="bg-yellow-400 text-black px-4 py-2 rounded-lg hover:bg-yellow-300 transition-colors font-normal mb-6">
               Get Started
             </button>
-            <div className="w-full mb-6">
-              <svg className="w-full h-4" viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 20C360 40 1080 0 1440 20V40H0V20Z" fill="white" />
-              </svg>
-            </div>
-            <div className="mt-auto border-t border-white pt-4">
+
+            {/* Contact Info at Bottom */}
+            <div className="mt-auto border-t border-gray-600 pt-4">
               <h4 className="text-white text-lg mb-2 font-bold">Contact</h4>
               <p className="text-white text-sm mb-1">Email: contact@ayeshaakmal.com</p>
               <p className="text-white text-sm">Phone: +92 341 2120752</p>
@@ -161,7 +174,8 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsOpen(false)} />}
+        {/* Overlay */}
+        {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />}
       </nav>
 
       {/* Get Started Modal */}
@@ -232,8 +246,6 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       )}
-
-
     </>
   );
 };
