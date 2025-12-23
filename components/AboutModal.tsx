@@ -30,7 +30,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
         <div className="overflow-y-auto flex flex-col md:flex-row h-full">
             {/* Left/Top Image Section - Reduced height for mobile */}
-            <div className="w-full md:w-5/12 bg-[var(--primary-color-tint-95)] relative h-56 md:h-auto md:min-h-full shrink-0">
+            <div className="w-full md:w-5/12 bg-[var(--primary-color-tint-95)] relative h-80 md:h-auto md:min-h-full shrink-0">
                 <img 
                     src="https://picsum.photos/600/800?grayscale&random=5" 
                     alt="Manisha Varma" 
