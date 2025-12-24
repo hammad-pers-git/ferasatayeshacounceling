@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Sprout, User, Phone, PhoneCall } from 'lucide-react';
+import { Menu, X, Sprout } from 'lucide-react';
+import { Loader2, ArrowRight, CheckCircle2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 type NavbarProps = {
@@ -7,10 +8,11 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);       // Mobile nav
+  const [isModalOpen, setIsModalOpen] = useState(false); // Full-page drawer
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isAnimating, setIsAnimating] = useState(false); // Added for drawer animation
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -29,6 +31,15 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Animate drawer when modal opens
+  useEffect(() => {
+    if (isModalOpen) {
+      setTimeout(() => setIsAnimating(true), 50); // small delay for transition
+    } else {
+      setIsAnimating(false);
+    }
+  }, [isModalOpen]);
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -60,7 +71,6 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
       .then(() => {
         emailjs.sendForm(SERVICE_ID, 'template_mfwdmk7', formRef.current, USER_ID)
           .catch(() => setSuccessMessage('Message sent, but auto-reply failed.'));
-
         setSuccessMessage('Thank you! Your information has been sent.');
         formRef.current?.reset();
         setLoading(false);
@@ -73,6 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
 
   return (
     <>
+      {/* NAVBAR */}
       <nav className="sticky top-0 z-50 w-full bg-[var(--white)] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-28 md:h-32">
@@ -173,76 +184,62 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
             </div>
           </div>
         </div>
-        
 
-
-        {/* Overlay */}
+        {/* Overlay for Mobile Drawer */}
         {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />}
       </nav>
 
-      {/* Get Started Modal */}
+      {/* FULL PAGE DRAWER FROM NAVBAR GET STARTED */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={toggleModal} />
+        <div className="fixed inset-0 z-[100] flex items-end">
+          <div
+            className={`absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity duration-500 ease-in-out ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
+            onClick={() => setIsModalOpen(false)}
+          />
 
-          <div className="relative w-full max-w-md md:max-w-3xl bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-200 md:max-h-[500px] md:overflow-y-auto">
+          <div
+            className={`relative w-full h-[95vh] bg-white rounded-t-[2.5rem] shadow-2xl overflow-hidden flex flex-col transform transition-transform duration-500 cubic-bezier(0.32, 0.72, 0, 1) ${isAnimating ? 'translate-y-0' : 'translate-y-full'}`}
+          >
+            <div className="w-full flex justify-center pt-4 pb-2">
+              <div className="w-12 h-1.5 bg-slate-200 rounded-full cursor-pointer" onClick={() => setIsModalOpen(false)} />
+            </div>
 
-            <button onClick={toggleModal} className="absolute top-4 right-4 z-50 p-2 bg-white/50 hover:bg-white rounded-full transition-colors text-gray-800">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-6 right-6 z-50 p-3 bg-slate-50 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-900 transition-colors"
+            >
               <X size={24} />
             </button>
 
-            {/* Left Illustration */}
-            <div className="hidden md:flex w-5/12 bg-[#FDE68A] flex-col items-center justify-center p-8 md:p-12 relative overflow-hidden">
-              <div className="absolute w-[120%] h-[120%] bg-white/20 rounded-full blur-3xl -top-10 -left-10"></div>
-              <img src="pictures/contactillustration.png" alt="Contact Illustration" className="relative z-10 w-full max-w-xs object-contain opacity-90" />
-            </div>
+            <div className="flex-1 overflow-y-auto flex items-center justify-center">
+              <div className="max-w-md w-full p-8 md:p-16">
+                {successMessage === '' ? (
+                  <>
+                    <h3 className="text-3xl font-bold text-slate-900 mb-3 text-center">Matching Details</h3>
+                    <p className="text-slate-500 text-center mb-6">Please provide your contact information to begin the matching process.</p>
 
-            {/* Right Form */}
-            <div className="w-full md:w-7/12 bg-[#FFFBF2] relative p-6 md:p-6 flex flex-col justify-center">
-              <div className="relative z-10 max-w-md w-full mx-auto md:mx-0">
-                <h2 className="text-2xl md:text-xl font-serif font-bold text-gray-900 mb-3">
-                  Get matched with a therapist
-                </h2>
-                <p className="text-gray-600 mb-4 text-sm md:text-xs">
-                  Start your therapy journey towards a happier, healthier you.
-                </p>
-
-                <form ref={formRef} className="space-y-3" onSubmit={handleSubmit}>
-                  {/* Name */}
-                  <div className="flex flex-col">
-                    <label className="text-gray-600 mb-1 text-sm md:text-xs">Name</label>
-                    <input type="text" name="name" required className="p-3 md:p-2 rounded-xl border border-gray-200 outline-none text-sm md:text-xs focus:ring-1 focus:ring-amber-300" placeholder="Your Name" />
+                    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                      <input name="name" type="text" placeholder="Full Name" required className="w-full px-6 py-4 rounded-2xl border-2 border-transparent focus:border-yellow-400 focus:bg-white bg-slate-50 outline-none text-slate-900" />
+                      <input name="email" type="email" placeholder="Email" required className="w-full px-6 py-4 rounded-2xl border-2 border-transparent focus:border-yellow-400 focus:bg-white bg-slate-50 outline-none text-slate-900" />
+                      <div className="flex gap-3">
+                        <div className="px-5 py-4 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-600 font-bold">+92</div>
+                        <input name="phone" type="tel" placeholder="3XX XXXXXXX" required className="flex-1 px-6 py-4 rounded-2xl border-2 border-transparent focus:border-yellow-400 focus:bg-white bg-slate-50 outline-none text-slate-900" />
+                      </div>
+                      <button type="submit" disabled={loading} className="w-full px-8 py-5 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-3">
+                        {loading ? <Loader2 className="w-6 h-6 animate-spin text-yellow-400" /> : <>Get Matched Now <ArrowRight className="w-5 h-5 text-yellow-400" /></>}
+                      </button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="text-center space-y-8 py-10">
+                    <div className="w-28 h-28 bg-green-100 rounded-[2.5rem] flex items-center justify-center mx-auto text-green-600">
+                      <CheckCircle2 size={56} strokeWidth={2} />
+                    </div>
+                    <h2 className="text-4xl font-serif font-bold text-slate-900">Application Sent!</h2>
+                    <p className="text-slate-600 text-lg">You'll receive a WhatsApp message within 24 hours to schedule your session.</p>
+                    <button onClick={() => setIsModalOpen(false)} className="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl">Return to Home</button>
                   </div>
-
-                  {/* Email */}
-                  <div className="flex flex-col">
-                    <label className="text-gray-600 mb-1 text-sm md:text-xs">Email</label>
-                    <input type="email" name="email" required className="p-3 md:p-2 rounded-xl border border-gray-200 outline-none text-sm md:text-xs focus:ring-1 focus:ring-amber-300" placeholder="you@example.com" />
-                  </div>
-
-                  {/* Phone */}
-                  <div className="flex flex-col">
-                    <label className="text-gray-600 mb-1 text-sm md:text-xs">Mobile Number (Whatsapp)</label>
-                    <input type="tel" name="phone" required className="p-3 md:p-2 rounded-xl border border-gray-200 outline-none text-sm md:text-xs focus:ring-1 focus:ring-amber-300" placeholder="XXXXXXXXX" />
-                  </div>
-
-                  {/* Service Dropdown */}
-                  <div className="flex flex-col">
-                    <label className="text-gray-600 mb-1 text-sm md:text-xs">Select Service</label>
-                    <select name="service" required className="p-3 md:p-2 rounded-xl border border-gray-200 outline-none text-sm md:text-xs focus:ring-1 focus:ring-amber-300">
-                      <option value="">Choose a service</option>
-                      <option value="Therapy Session">Therapy Session</option>
-                      <option value="Consultation">Consultation</option>
-                      <option value="Follow-up">Follow-up</option>
-                    </select>
-                  </div>
-
-                  <button type="submit" disabled={loading} className="w-full bg-[#FCD34D] hover:bg-[#FBBF24] text-gray-900 font-semibold py-3 md:py-2 rounded-xl shadow-sm transition-colors text-sm md:text-xs">
-                    {loading ? 'Sending...' : 'Submit'}
-                  </button>
-
-                  {successMessage && <p className="text-center text-sm md:text-xs text-green-600 mt-1">{successMessage}</p>}
-                </form>
+                )}
               </div>
             </div>
           </div>
