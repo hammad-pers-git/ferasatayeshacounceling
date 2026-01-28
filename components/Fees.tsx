@@ -121,7 +121,7 @@ const Fees = () => {
             }, {
               isPopular: true,
               title: "Couples Session",
-              price: "3,500",
+              price: "5,000",
               duration: "75 mins",
               icon: <Users size={26} />,
               features: [
