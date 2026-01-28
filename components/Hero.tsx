@@ -116,12 +116,6 @@ const Hero: React.FC = () => {
           >
             Online therapy <br className="md:hidden" /> that works.
           </motion.h1>
-          <motion.h2
-            className="text-[var(--primary-black)] text-lg md:text-2xl font-medium mb-8 md:mb-12 max-w-xl mx-auto leading-normal font-serif"
-            variants={itemVariants}
-          >
-            A licensed psychologist in Pakistan <br className="hidden md:block" /> here to support you.
-          </motion.h2>
           <motion.p
             className="text-[var(--primary-black)] text-base md:text-lg opacity-80 font-sans"
             variants={itemVariants}
