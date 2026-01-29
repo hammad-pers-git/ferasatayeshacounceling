@@ -44,7 +44,7 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           height: 600px;
           bottom: -200px;
           right: -200px;
-          animation: footer-float 10s ease-in-out infinite;
+          animation: footer-float 25s ease-in-out infinite;
         }
 
         .footer-bg-decoration::after {
@@ -52,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           height: 400px;
           top: -100px;
           left: -100px;
-          animation: footer-float 10s ease-in-out infinite reverse;
+          animation: footer-float 20s ease-in-out infinite reverse;
         }
 
         @keyframes footer-float {

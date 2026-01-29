@@ -57,7 +57,7 @@ const About: React.FC<AboutProps> = ({ onOpenAbout }) => {
 
           {/* Left: Image with Badge */}
           <motion.div
-            className="relative group cursor-pointer"
+            className="relative group cursor-pointer bg-white"
             onClick={onOpenAbout}
             variants={imageVariants}
             whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}

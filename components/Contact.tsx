@@ -196,7 +196,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
         {/* Traditional Contact Info Grid */}
-        <div className="mt-12 md:mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 border-t border-[var(--grey-6)] pt-12">
+        <div className="mt-12 md:mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 border-t border-[var(--grey-6)] pt-12 max-w-2xl mx-auto">
           {/* Business Hours */}
           <div className="flex flex-col items-center text-center group cursor-default">
             <div className="w-14 h-14 rounded-full bg-[var(--primary-color-tint-95)] flex items-center justify-center text-[var(--primary-black)] mb-4 group-hover:bg-[var(--primary-color)] transition-colors">
